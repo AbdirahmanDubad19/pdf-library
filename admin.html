@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — PDF Library</title>
+  </head>
+  <body>
+    <h1>Admin</h1>
+
+    <div id="login-form">
+      <label>Email: <input id="email" type="email" placeholder="you@example.com" /></label>
+      <button id="btn-login">Send magic link</button>
+    </div>
+
+    <div id="signed-in" style="margin-top:1rem">
+      <div><strong>User:</strong> <span id="user-email"></span></div>
+      <div><strong>Last sign in:</strong> <span id="last-signin">Not signed in</span></div>
+      <button id="btn-signout" style="display:none;margin-top:.5rem">Sign out</button>
+    </div>
+
+    <script type="module" src="/js/admin.js"></script>
+  </body>
+</html>
