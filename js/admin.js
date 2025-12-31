@@ -30,8 +30,39 @@ async function checkAuth() {
   } else {
     loginBox.style.display = "none";
     adminBox.style.display = "block";
+
+    // ✅ Add the PDF upload code here
+    const uploadBtn = document.getElementById("uploadBtn");
+    const pdfInput = document.getElementById("pdfFile");
+    const statusEl = document.getElementById("uploadStatus");
+
+    uploadBtn.onclick = async () => {
+      const file = pdfInput.files[0];
+      if (!file) {
+        statusEl.textContent = "Please select a PDF file.";
+        return;
+      }
+
+      const filePath = `${Date.now()}_${file.name}`;
+
+      const { error } = await supabase.storage
+        .from("pdfs")
+        .upload(filePath, file);
+
+      if (error) {
+        statusEl.textContent = error.message;
+        return;
+      }
+
+      const { data } = supabase.storage
+        .from("pdfs")
+        .getPublicUrl(filePath);
+
+      statusEl.textContent = `Uploaded: ${data.publicUrl}`;
+    };
   }
 }
+
 
 checkAuth();
 
