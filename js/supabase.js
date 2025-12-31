@@ -1,12 +1,7 @@
-console.log("supabase config loaded");
+// supabase.js
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const SUPABASE_URL = "https://jjdcvwjfulyudbfbkdwx.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1zjYbj3nIeY0zAZQjiX3mw_1ELG3eyh";
-
-export const supabase = createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+const supabaseUrl = "https://your-project-ref.supabase.co";
+const supabaseKey = "your-public-anon-key"; // replace with your actual anon/public key
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
