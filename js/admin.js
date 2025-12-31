@@ -1,20 +1,37 @@
 // admin.js
 import { supabase } from './supabase.js';
 
+// Login elements
+const loginBox = document.getElementById("loginBox");
+const adminBox = document.getElementById("adminBox");
+const errorEl = document.getElementById("error");
+
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+
+document.getElementById("loginBtn").onclick = async () => {
+  const { error } = await supabase.auth.signInWithPassword({
+    email: emailInput.value,
+    password: passwordInput.value,
+  });
+  if (error) errorEl.textContent = error.message;
+  else location.reload();
+};
+
+// Logout
 document.getElementById("logoutBtn").onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
+// Helper to sanitize file names
 function sanitizeFileName(name) {
   return name.replace(/\s+/g, "_").replace(/[^\w.-]/g, "");
 }
 
+// Check auth and display admin panel
 async function checkAuth() {
-  const { session } = await supabase.auth.getSession();
-  const loginBox = document.getElementById("loginBox");
-  const adminBox = document.getElementById("adminBox");
-
+  const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
     loginBox.style.display = "block";
     adminBox.style.display = "none";
@@ -25,6 +42,7 @@ async function checkAuth() {
   }
 }
 
+// Setup PDF upload and list
 async function setupUploadAndList() {
   const uploadBtn = document.getElementById("uploadBtn");
   const pdfInput = document.getElementById("pdfFile");
@@ -32,15 +50,26 @@ async function setupUploadAndList() {
 
   uploadBtn.onclick = async () => {
     const file = pdfInput.files[0];
-    if (!file) { statusEl.textContent = "Please select a PDF file."; return; }
+    if (!file) {
+      statusEl.textContent = "Please select a PDF file.";
+      return;
+    }
 
     const filePath = `${Date.now()}_${sanitizeFileName(file.name)}`;
 
+    // Upload to Supabase
     const { error } = await supabase.storage.from("pdfs").upload(filePath, file);
-    if (error) { statusEl.textContent = "Upload failed: " + error.message; return; }
+    if (error) {
+      statusEl.textContent = "Upload failed: " + error.message;
+      return;
+    }
 
+    // Get public URL
     const { data: { publicUrl }, error: urlError } = supabase.storage.from("pdfs").getPublicUrl(filePath);
-    if (urlError) { statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message; return; }
+    if (urlError) {
+      statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message;
+      return;
+    }
 
     statusEl.textContent = `Uploaded: ${publicUrl}`;
     loadPdfList();
@@ -49,6 +78,7 @@ async function setupUploadAndList() {
   loadPdfList();
 }
 
+// Load PDFs into list
 async function loadPdfList() {
   const pdfListEl = document.getElementById("pdfList");
   const { data: files, error } = await supabase.storage.from("pdfs").list("", { limit: 100 });
@@ -80,4 +110,5 @@ async function loadPdfList() {
   });
 }
 
+// Run auth check on page load
 checkAuth();
