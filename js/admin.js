@@ -1,4 +1,3 @@
-alert("admin.js loaded");
 import { supabase } from "./supabase.js";
 
 const loginBox = document.getElementById("login");
@@ -14,9 +13,7 @@ document.getElementById("loginBtn").onclick = async () => {
     password: passwordInput.value,
   });
 
-  if (error) {
-    errorEl.textContent = error.message;
-  }
+  if (error) errorEl.textContent = error.message;
 };
 
 document.getElementById("logoutBtn").onclick = async () => {
@@ -24,14 +21,19 @@ document.getElementById("logoutBtn").onclick = async () => {
   location.reload();
 };
 
-supabase.auth.onAuthStateChange((_event, session) => {
-  if (session) {
-    loginBox.style.display = "none";
-    adminBox.style.display = "block";
-  } else {
+async function checkAuth() {
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
     loginBox.style.display = "block";
     adminBox.style.display = "none";
+  } else {
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
   }
-});
+}
+
+checkAuth();
+
 
 
