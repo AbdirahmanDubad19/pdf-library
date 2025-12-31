@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin Login</title>
+  <title>Admin</title>
 </head>
 <body>
-  <h1>Admin</h1>
-  <input type="email" placeholder="Email" />
-  <input type="password" placeholder="Password" />
-  <button>Login</button>
+  <h1>Admin Login</h1>
+
+  <div id="login">
+    <input id="email" type="email" placeholder="Email" />
+    <input id="password" type="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <p id="error"></p>
+  </div>
+
+  <div id="admin" style="display:none;">
+    <h2>Welcome, Admin</h2>
+    <button id="logoutBtn">Logout</button>
+  </div>
+
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>
-<script src="js/admin.js"></script>
+
 
