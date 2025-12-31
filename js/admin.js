@@ -1,27 +1,17 @@
 // admin.js
 import { supabase } from './supabase.js';
 
-// -------------------------
-// Logout button
-// -------------------------
 document.getElementById("logoutBtn").onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
-// -------------------------
-// Sanitize filenames
-// -------------------------
 function sanitizeFileName(name) {
   return name.replace(/\s+/g, "_").replace(/[^\w.-]/g, "");
 }
 
-// -------------------------
-// Check authentication and show admin panel
-// -------------------------
 async function checkAuth() {
   const { session } = await supabase.auth.getSession();
-
   const loginBox = document.getElementById("loginBox");
   const adminBox = document.getElementById("adminBox");
 
@@ -35,9 +25,6 @@ async function checkAuth() {
   }
 }
 
-// -------------------------
-// Setup PDF upload and list
-// -------------------------
 async function setupUploadAndList() {
   const uploadBtn = document.getElementById("uploadBtn");
   const pdfInput = document.getElementById("pdfFile");
@@ -49,11 +36,9 @@ async function setupUploadAndList() {
 
     const filePath = `${Date.now()}_${sanitizeFileName(file.name)}`;
 
-    // Upload file
     const { error } = await supabase.storage.from("pdfs").upload(filePath, file);
     if (error) { statusEl.textContent = "Upload failed: " + error.message; return; }
 
-    // Get public URL
     const { data: { publicUrl }, error: urlError } = supabase.storage.from("pdfs").getPublicUrl(filePath);
     if (urlError) { statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message; return; }
 
@@ -64,12 +49,9 @@ async function setupUploadAndList() {
   loadPdfList();
 }
 
-// -------------------------
-// Load PDFs dynamically
-// -------------------------
 async function loadPdfList() {
   const pdfListEl = document.getElementById("pdfList");
-  const { data: files, error } = await supabase.storage.from("pdfs").list("", { limit: 100, offset: 0 });
+  const { data: files, error } = await supabase.storage.from("pdfs").list("", { limit: 100 });
   if (error) { pdfListEl.textContent = "Failed to load PDF list: " + error.message; return; }
 
   pdfListEl.innerHTML = "";
@@ -98,7 +80,4 @@ async function loadPdfList() {
   });
 }
 
-// -------------------------
-// Run auth check on page load
-// -------------------------
 checkAuth();

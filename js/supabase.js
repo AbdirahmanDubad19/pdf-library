@@ -1,7 +1,8 @@
 // supabase.js
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-const supabaseUrl = "https://your-project-ref.supabase.co";
-const supabaseKey = "your-public-anon-key"; // replace with your actual anon/public key
+const supabaseUrl = "https://YOUR_PROJECT_REF.supabase.co"; // replace with your Supabase URL
+const supabaseKey = "YOUR_PUBLIC_ANON_KEY"; // replace with your anon public key
 export const supabase = createClient(supabaseUrl, supabaseKey);
+
 
