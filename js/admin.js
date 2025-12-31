@@ -119,6 +119,60 @@ async function checkAuth() {
       loadPdfList();
     }
 
+    // -------------------------
+    // Display uploaded PDFs with delete buttons
+    // -------------------------
+    async function loadPdfList() {
+      const pdfListEl = document.getElementById("pdfList");
+
+      const { data: files, error } = await supabase.storage
+        .from("pdfs")
+        .list("");
+
+      if (error) {
+        console.error("Failed to list PDFs:", error);
+        pdfListEl.textContent = "Failed to load PDF list: " + error.message;
+        return;
+      }
+
+      pdfListEl.innerHTML = "";
+
+      files.forEach(file => {
+        const { name } = file;
+        const { data: publicData } = supabase.storage
+          .from("pdfs")
+          .getPublicUrl(name);
+
+        const li = document.createElement("li");
+
+        const link = document.createElement("a");
+        link.href = publicData.publicUrl;
+        link.textContent = name;
+        link.target = "_blank";
+        li.appendChild(link);
+
+        // Create delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.style.marginLeft = "10px";
+        deleteBtn.onclick = async () => {
+          const { error: delError } = await supabase.storage
+            .from("pdfs")
+            .remove([name]);
+          if (delError) {
+            alert("Delete failed: " + delError.message);
+            return;
+          }
+          li.remove(); // remove from list after deletion
+          alert("Deleted: " + name);
+        };
+
+        li.appendChild(deleteBtn);
+        pdfListEl.appendChild(li);
+      });
+    }
+
+
   }
 }
 
