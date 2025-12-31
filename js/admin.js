@@ -1,3 +1,4 @@
+alert("admin.js loaded");
 import { supabase } from "./supabase.js";
 
 const loginBox = document.getElementById("login");
