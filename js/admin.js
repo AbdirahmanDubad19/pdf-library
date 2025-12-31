@@ -32,34 +32,47 @@ async function checkAuth() {
     adminBox.style.display = "block";
 
     // ✅ Add the PDF upload code here
-    const uploadBtn = document.getElementById("uploadBtn");
-    const pdfInput = document.getElementById("pdfFile");
-    const statusEl = document.getElementById("uploadStatus");
+    // ✅ PDF Upload (Admin-only)
+const uploadBtn = document.getElementById("uploadBtn");
+const pdfInput = document.getElementById("pdfFile");
+const statusEl = document.getElementById("uploadStatus");
 
-    uploadBtn.onclick = async () => {
-      const file = pdfInput.files[0];
-      if (!file) {
-        statusEl.textContent = "Please select a PDF file.";
-        return;
-      }
+uploadBtn.onclick = async () => {
+  const file = pdfInput.files[0];
+  if (!file) {
+    statusEl.textContent = "Please select a PDF file.";
+    return;
+  }
 
-      const filePath = `${Date.now()}_${file.name}`;
+  const filePath = `${Date.now()}_${file.name}`;
 
-      const { error } = await supabase.storage
-        .from("pdfs")
-        .upload(filePath, file);
+  // Upload file to Supabase
+  const { data, error } = await supabase.storage
+    .from("PDFS") // exact bucket name
+    .upload(filePath, file);
 
-      if (error) {
-        statusEl.textContent = error.message;
-        return;
-      }
+  if (error) {
+    console.error("Upload failed:", error);
+    statusEl.textContent = "Upload failed: " + error.message;
+    return;
+  }
 
-      const { data } = supabase.storage
-        .from("pdfs")
-        .getPublicUrl(filePath);
+  // Get public URL safely
+  const { data: publicData, error: urlError } = supabase.storage
+    .from("PDFS")
+    .getPublicUrl(filePath);
 
-      statusEl.textContent = `Uploaded: ${data.publicUrl}`;
-    };
+  if (urlError) {
+    console.error("Failed to get public URL:", urlError);
+    statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message;
+    return;
+  }
+
+  console.log("Upload succeeded:", publicData.publicUrl);
+  statusEl.textContent = `Uploaded: ${publicData.publicUrl}`;
+};
+
+
   }
 }
 
