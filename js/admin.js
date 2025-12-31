@@ -16,13 +16,20 @@ document.getElementById("loginBtn").onclick = async () => {
   if (error) errorEl.textContent = error.message;
 };
 
+// admin.js
+
+// Logout button
 document.getElementById("logoutBtn").onclick = async () => {
   await supabase.auth.signOut();
   location.reload();
 };
 
+// Check auth and show admin panel
 async function checkAuth() {
   const { data: { session } } = await supabase.auth.getSession();
+
+  const loginBox = document.getElementById("loginBox");
+  const adminBox = document.getElementById("adminBox");
 
   if (!session) {
     loginBox.style.display = "block";
@@ -31,53 +38,51 @@ async function checkAuth() {
     loginBox.style.display = "none";
     adminBox.style.display = "block";
 
-    // ✅ Add the PDF upload code here
-    // ✅ PDF Upload (Admin-only)
-const uploadBtn = document.getElementById("uploadBtn");
-const pdfInput = document.getElementById("pdfFile");
-const statusEl = document.getElementById("uploadStatus");
+    // ✅ PDF Upload
+    const uploadBtn = document.getElementById("uploadBtn");
+    const pdfInput = document.getElementById("pdfFile");
+    const statusEl = document.getElementById("uploadStatus");
 
-uploadBtn.onclick = async () => {
-  const file = pdfInput.files[0];
-  if (!file) {
-    statusEl.textContent = "Please select a PDF file.";
-    return;
-  }
+    uploadBtn.onclick = async () => {
+      const file = pdfInput.files[0];
+      if (!file) {
+        statusEl.textContent = "Please select a PDF file.";
+        return;
+      }
 
-  const filePath = `${Date.now()}_${file.name}`;
+      const filePath = `${Date.now()}_${file.name}`;
 
-  // Upload file to Supabase
-  const { data, error } = await supabase.storage
-    .from("pdfs") // exact bucket name
-    .upload(filePath, file);
+      // Upload file to Supabase
+      const { data, error } = await supabase.storage
+        .from("pdfs") // lowercase bucket name
+        .upload(filePath, file);
 
-  if (error) {
-    console.error("Upload failed:", error);
-    statusEl.textContent = "Upload failed: " + error.message;
-    return;
-  }
+      if (error) {
+        console.error("Upload failed:", error);
+        statusEl.textContent = "Upload failed: " + error.message;
+        return;
+      }
 
-  // Get public URL safely
-  const { data: publicData, error: urlError } = supabase.storage
-    .from("pdfs")
-    .getPublicUrl(filePath);
+      // Get public URL
+      const { data: publicData, error: urlError } = supabase.storage
+        .from("pdfs") // lowercase bucket name
+        .getPublicUrl(filePath);
 
-  if (urlError) {
-    console.error("Failed to get public URL:", urlError);
-    statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message;
-    return;
-  }
+      if (urlError) {
+        console.error("Failed to get public URL:", urlError);
+        statusEl.textContent = "Upload succeeded but URL failed: " + urlError.message;
+        return;
+      }
 
-  console.log("Upload succeeded:", publicData.publicUrl);
-  statusEl.textContent = `Uploaded: ${publicData.publicUrl}`;
-};
-
-
+      console.log("Upload succeeded:", publicData.publicUrl);
+      statusEl.textContent = `Uploaded: ${publicData.publicUrl}`;
+    };
   }
 }
 
-
+// Run auth check on page load
 checkAuth();
+
 
 
 
