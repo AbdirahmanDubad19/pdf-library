@@ -48,7 +48,7 @@ uploadBtn.onclick = async () => {
 
   // Upload file to Supabase
   const { data, error } = await supabase.storage
-    .from("PDFS") // exact bucket name
+    .from("pdfs") // exact bucket name
     .upload(filePath, file);
 
   if (error) {
@@ -59,7 +59,7 @@ uploadBtn.onclick = async () => {
 
   // Get public URL safely
   const { data: publicData, error: urlError } = supabase.storage
-    .from("PDFS")
+    .from("pdfs")
     .getPublicUrl(filePath);
 
   if (urlError) {
