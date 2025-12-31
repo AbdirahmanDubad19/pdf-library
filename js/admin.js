@@ -65,40 +65,6 @@ async function checkAuth() {
   loadPdfList(); // load on page load
 }
 
-// -------------------------
-// Load PDFs dynamically
-// -------------------------
-async function loadPdfList() {
-  const pdfListEl = document.getElementById("pdfList");
-  const { data: files, error } = await supabase.storage.from("pdfs").list("", { limit: 100, offset: 0 });
-  if (error) { pdfListEl.textContent = "Failed to load PDF list: " + error.message; return; }
-
-  pdfListEl.innerHTML = "";
-  files.forEach(file => {
-    const { data: publicData } = supabase.storage.from("pdfs").getPublicUrl(file.name);
-    const li = document.createElement("li");
-
-    const link = document.createElement("a");
-    link.href = publicData.publicUrl;
-    link.textContent = file.name;
-    link.target = "_blank";
-    li.appendChild(link);
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.style.marginLeft = "10px";
-    deleteBtn.onclick = async () => {
-      const { error: delError } = await supabase.storage.from("pdfs").remove([file.name]);
-      if (delError) { alert("Delete failed: " + delError.message); return; }
-      li.remove();
-    };
-    li.appendChild(deleteBtn);
-
-    pdfListEl.appendChild(li);
-  });
-}
-
-// -------------------------
 // Run auth check
 // -------------------------
 checkAuth();
