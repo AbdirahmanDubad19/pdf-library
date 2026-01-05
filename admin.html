@@ -25,7 +25,11 @@
     <button id="logoutBtn">Logout</button>
   </div>
 
-  <script type="module" src="./admin.js"></script>
+  <script type="module" src="./admin.js">
+    supabase.auth.getSession().then(console.log)
+  </script>
+  
+
 </body>
 </html>
 
