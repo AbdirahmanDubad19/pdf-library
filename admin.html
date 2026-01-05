@@ -1,33 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Admin Panel</title>
+  <title>Admin</title>
 </head>
 <body>
-  <div id="loginBox">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button id="loginBtn">Login</button>
-    <div id="error"></div>
-  </div>
 
-  <div id="adminBox" style="display:none;">
-    <h2>Upload PDF</h2>
-    <input type="file" id="pdfFile">
-    <button id="uploadBtn">Upload</button>
-    <div id="uploadStatus"></div>
+<div id="loginBox">
+  <h2>Admin Login</h2>
+  <input id="email" placeholder="Email" />
+  <input id="password" type="password" placeholder="Password" />
+  <button id="loginBtn">Login</button>
+  <p id="error"></p>
+</div>
 
-    <h3>Uploaded PDFs</h3>
-    <ul id="pdfList"></ul>
+<div id="adminBox" style="display:none">
+  <h2>Upload PDF</h2>
+  <input type="file" id="pdfFile" accept="application/pdf" />
+  <button id="uploadBtn">Upload</button>
+  <p id="uploadStatus"></p>
 
-    <button id="logoutBtn">Logout</button>
-  </div>
+  <button id="logoutBtn">Logout</button>
+</div>
 
-  <script type="module" src="./admin.js"></script>
-  
-
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>
 
