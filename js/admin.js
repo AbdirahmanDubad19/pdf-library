@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase } from "./supabase.js";
 
 /* Elements */
 const loginBox = document.getElementById("loginBox");
