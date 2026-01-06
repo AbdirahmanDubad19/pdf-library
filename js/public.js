@@ -1,41 +1,46 @@
 // js/public.js
-import { supabase } from "./supabase.js";
+import { supabaseClient } from "./supabase.js";
 
 const pdfList = document.getElementById("pdfList");
 
 async function loadPDFs() {
-  const { data: files, error } = await supabase.storage.from("pdfs").list("");
+  // ✅ THIS IS THE LINE YOU SAID WAS MISSING
+  const { data, error } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .list("");
+
   if (error) {
-    console.error("Error fetching PDFs:", error);
-    pdfList.innerHTML = "<li>Failed to load PDFs</li>";
+    console.error("Error listing PDFs:", error);
+    pdfList.innerHTML = "<li>failed to load pdfs</li>";
     return;
   }
 
-  if (!files || files.length === 0) {
-    pdfList.innerHTML = "<li>No PDFs found</li>";
+  if (!data || data.length === 0) {
+    pdfList.innerHTML = "<li>no pdfs available</li>";
     return;
   }
 
   pdfList.innerHTML = "";
 
-  files.forEach(file => {
+  data.forEach(file => {
     if (!file.name.endsWith(".pdf")) return;
 
-    const { data: urlData } = supabase.storage.from("pdfs").getPublicUrl(file.name);
-    const url = urlData?.publicUrl;
-    if (!url) return;
+    const { data: urlData } =
+      supabaseClient.storage.from("pdfs").getPublicUrl(file.name);
 
-    // Add PDF item with inline viewer link and download
+    const url = urlData.publicUrl;
+
     const li = document.createElement("li");
     li.innerHTML = `
       <strong>${file.name}</strong><br>
-      <a href="${url}" target="_blank">📖 Read</a>
+      <a href="${url}" target="_blank">📖 read</a>
       &nbsp;|&nbsp;
-      <a href="${url}" download>⬇ Download</a>
+      <a href="${url}" download>⬇ download</a>
     `;
+
     pdfList.appendChild(li);
   });
 }
 
 loadPDFs();
-
