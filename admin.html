@@ -1,30 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Admin</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div id="loginBox">
-  <h2>Admin Login</h2>
-  <input id="email" placeholder="Email" />
-  <input id="password" type="password" placeholder="Password" />
-  <button id="loginBtn">Login</button>
-  <p id="error"></p>
+<nav>
+  <div><strong>PDF Library</strong></div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Login -->
+  <div id="loginBox" class="card">
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <div id="error" class="status"></div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="adminBox" class="card" style="display:none;">
+    <h2>Admin Panel</h2>
+    <button id="logoutBtn">Logout</button>
+
+    <div class="admin-actions">
+      <h3>Upload PDF</h3>
+      <input type="file" id="pdfFile">
+      <button id="uploadBtn">Upload</button>
+      <div id="uploadStatus" class="status"></div>
+    </div>
+  </div>
+
 </div>
 
-<div id="adminBox" style="display:none">
-  <h2>Upload PDF</h2>
-  <input type="file" id="pdfFile" accept="application/pdf" />
-  <button id="uploadBtn">Upload</button>
-  <p id="uploadStatus"></p>
-
-  <button id="logoutBtn">Logout</button>
-</div>
-
-<script type="module" src="./js/admin.js"></script>
+<script type="module" src="js/admin.js"></script>
 </body>
 </html>
-
 
 
