@@ -4,12 +4,7 @@ import { supabase } from "./supabase.js";
 const pdfList = document.getElementById("pdfList");
 
 async function loadPDFs() {
-  // List files in the bucket
-  const { data: files, error } = await supabase
-    .storage
-    .from("pdfs")
-    .list("", { limit: 100 });
-
+  const { data: files, error } = await supabase.storage.from("pdfs").list("");
   if (error) {
     console.error("Error fetching PDFs:", error);
     pdfList.innerHTML = "<li>Failed to load PDFs</li>";
@@ -23,24 +18,14 @@ async function loadPDFs() {
 
   pdfList.innerHTML = "";
 
-  for (const file of files) {
-    if (!file.name.endsWith(".pdf")) continue;
+  files.forEach(file => {
+    if (!file.name.endsWith(".pdf")) return;
 
-    // Get public URL
-    const { data: urlData, error: urlError } = supabase
-      .storage
-      .from("pdfs")
-      .getPublicUrl(file.name);
+    const { data: urlData } = supabase.storage.from("pdfs").getPublicUrl(file.name);
+    const url = urlData?.publicUrl;
+    if (!url) return;
 
-    if (urlError) {
-      console.error("Error getting public URL:", urlError);
-      continue;
-    }
-
-    const url = urlData.publicUrl;
-    if (!url) continue;
-
-    // Add to page
+    // Add PDF item with inline viewer link and download
     const li = document.createElement("li");
     li.innerHTML = `
       <strong>${file.name}</strong><br>
@@ -49,7 +34,7 @@ async function loadPDFs() {
       <a href="${url}" download>⬇ Download</a>
     `;
     pdfList.appendChild(li);
-  }
+  });
 }
 
 loadPDFs();
