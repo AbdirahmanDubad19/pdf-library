@@ -48,33 +48,6 @@ async function checkAuth() {
   }
 }
 
-/* Upload PDF */
+/* Upload PDF (minimal, no extras) */
 uploadBtn.onclick = async () => {
-  const file = pdfInput.files[0];
-
-  if (!file) {
-    statusEl.textContent = "Please select a PDF first";
-    return;
-  }
-
-  const safeName = file.name.replace(/\s+/g, "_");
-  const filePath = `${Date.now()}_${safeName}`;
-
-  const { error } = await supabaseClient
-    .storage
-    .from("pdfs")
-    .upload(filePath, file, {
-      contentType: "application/pdf",
-      upsert: false,
-    });
-
-  if (error) {
-    console.error(error);
-    statusEl.textContent = "Upload failed: " + error.message;
-  } else {
-    statusEl.textContent = "Upload successful ✅";
-  }
-};
-
-/* Run on load */
-checkAuth();
+  const file = pdfI
