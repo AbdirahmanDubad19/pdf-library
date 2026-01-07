@@ -61,11 +61,6 @@ if (!file) {
 const safeName = file.name.replace(/\s+/g, "_");
 const filePath = `${Date.now()}_${safeName}`;
 
-console.log("fileInput.files[0] =", file);
-console.log("filePath =", filePath);
-console.log("supabaseClient =", supabaseClient);
-
-
 const { data, error } = await supabaseClient
   .storage
   .from("pdfs")
