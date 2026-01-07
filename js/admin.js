@@ -49,30 +49,38 @@ async function checkAuth() {
 }
 
 /* Upload PDF */
-uploadBtn.onclick = async () => {
-  const file = pdfInput.files[0];
-  if (!file) {
-    statusEl.textContent = "Select a PDF first";
-    return;
-  }
+const fileInput = document.getElementById("pdfFile");
+const file = fileInput.files[0];
 
-  const filePath = `${Date.now()}_${file.name}`;
+if (!file) {
+  statusEl.textContent = "Please select a PDF first";
+  return;
+}
 
-  const { error } = await supabase.storage
-    .from("pdfs") // ⚠️ lowercase – must match bucket exactly
-    .upload(filePath, file);
+// sanitize filename
+const safeName = file.name.replace(/\s+/g, "_");
+const filePath = `${Date.now()}_${safeName}`;
 
-  if (error) {
-    statusEl.textContent = "Upload failed: " + error.message;
-    return;
-  }
+console.log("fileInput.files[0] =", file);
+console.log("filePath =", filePath);
+console.log("supabaseClient =", supabaseClient);
 
-  const { data } = supabase.storage
-    .from("pdfs")
-    .getPublicUrl(filePath);
 
-  statusEl.textContent = "Uploaded: " + data.publicUrl;
-};
+const { data, error } = await supabaseClient
+  .storage
+  .from("pdfs")
+  .upload(filePath, file, {
+    contentType: "application/pdf",
+    upsert: false
+  });
+
+if (error) {
+  console.error(error);
+  statusEl.textContent = "Upload failed: " + error.message;
+} else {
+  statusEl.textContent = "Upload successful ✅";
+}
+
 
 /* Run on load */
 checkAuth();
