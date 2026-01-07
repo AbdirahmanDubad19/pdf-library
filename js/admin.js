@@ -1,4 +1,4 @@
-import { supabaseClient} from "./supabase.js";
+import { supabaseClient } from "./supabase.js";
 
 /* Elements */
 const loginBox = document.getElementById("loginBox");
@@ -48,24 +48,24 @@ async function checkAuth() {
   }
 }
 
-//upload PDF
+/* Upload PDF */
 uploadBtn.onclick = async () => {
   const file = pdfInput.files[0];
 
   if (!file) {
     statusEl.textContent = "Please select a PDF first";
-    return; // ✅ Now valid because it's inside a function
+    return;
   }
 
   const safeName = file.name.replace(/\s+/g, "_");
   const filePath = `${Date.now()}_${safeName}`;
 
-  const { data, error } = await supabaseClient
+  const { error } = await supabaseClient
     .storage
     .from("pdfs")
     .upload(filePath, file, {
       contentType: "application/pdf",
-      upsert: false
+      upsert: false,
     });
 
   if (error) {
@@ -73,9 +73,8 @@ uploadBtn.onclick = async () => {
     statusEl.textContent = "Upload failed: " + error.message;
   } else {
     statusEl.textContent = "Upload successful ✅";
-   }
-
-
+  }
+};
 
 /* Run on load */
 checkAuth();
