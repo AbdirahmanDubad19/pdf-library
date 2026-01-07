@@ -14,7 +14,7 @@ const statusEl = document.getElementById("uploadStatus");
 
 /* Login */
 document.getElementById("loginBtn").onclick = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabaseClient.auth.signInWithPassword({
     email: emailInput.value,
     password: passwordInput.value,
   });
@@ -29,7 +29,7 @@ document.getElementById("loginBtn").onclick = async () => {
 
 /* Logout */
 document.getElementById("logoutBtn").onclick = async () => {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   checkAuth();
 };
 
@@ -37,7 +37,7 @@ document.getElementById("logoutBtn").onclick = async () => {
 async function checkAuth() {
   const {
     data: { session },
-  } = await supabase.auth.getSession();
+  } = await supabaseClient.auth.getSession();
 
   if (!session) {
     loginBox.style.display = "block";
