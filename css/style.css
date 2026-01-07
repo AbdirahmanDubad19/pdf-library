@@ -154,6 +154,60 @@ button:hover {
   color: #6b5a4e;
 }
 
+/* === Reader container === */
+#readerCard {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 1.5rem 1.5rem 2rem;
+  background: #fffaf3;
+  border-radius: 20px;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* Reader title */
+#readerTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5b3e2b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Divider */
+#readerCard::before {
+  content: "reading";
+  display: block;
+  text-align: center;
+  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+  color: #b59a7a;
+  margin-bottom: 1rem;
+}
+
+/* PDF iframe */
+#pdfReader {
+  width: 100%;
+  height: 70vh;
+  border-radius: 14px;
+  background: #f2ede6;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+}
+
+#closeReader {
+  display: block;
+  margin: 0 auto 1rem;
+  background: #e6d3b3;
+  border: none;
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+
+
 /* ======================
    Footer
 ====================== */

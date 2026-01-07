@@ -52,6 +52,12 @@ async function loadPDFs() {
 
     pdfList.appendChild(li);
   });
+
+  document.getElementById("closeReader").onclick = () => {
+  readerCard.style.display = "none";
+  pdfReader.src = "";
+};
+
 }
 
 loadPDFs();
