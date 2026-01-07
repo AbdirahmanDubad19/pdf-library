@@ -50,4 +50,26 @@ async function checkAuth() {
 
 /* Upload PDF (minimal, no extras) */
 uploadBtn.onclick = async () => {
-  const file = pdfI
+  const file = pdfInput.files[0];
+
+  if (!file) {
+    statusEl.textContent = "Please select a PDF first";
+    return;
+  }
+
+  const filePath = `${Date.now()}_${file.name}`;
+
+  const { error } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .upload(filePath, file);
+
+  if (error) {
+    statusEl.textContent = error.message;
+  } else {
+    statusEl.textContent = "Upload successful ✅";
+  }
+};
+
+/* Run on load */
+checkAuth();
