@@ -48,33 +48,33 @@ async function checkAuth() {
   }
 }
 
-/* Upload PDF */
-const fileInput = document.getElementById("pdfFile");
-const file = fileInput.files[0];
+//upload PDF
+uploadBtn.onclick = async () => {
+  const file = pdfInput.files[0];
 
-if (!file) {
-  statusEl.textContent = "Please select a PDF first";
-  return;
-}
+  if (!file) {
+    statusEl.textContent = "Please select a PDF first";
+    return; // ✅ Now valid because it's inside a function
+  }
 
-// sanitize filename
-const safeName = file.name.replace(/\s+/g, "_");
-const filePath = `${Date.now()}_${safeName}`;
+  const safeName = file.name.replace(/\s+/g, "_");
+  const filePath = `${Date.now()}_${safeName}`;
 
-const { data, error } = await supabaseClient
-  .storage
-  .from("pdfs")
-  .upload(filePath, file, {
-    contentType: "application/pdf",
-    upsert: false
-  });
+  const { data, error } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .upload(filePath, file, {
+      contentType: "application/pdf",
+      upsert: false
+    });
 
-if (error) {
-  console.error(error);
-  statusEl.textContent = "Upload failed: " + error.message;
-} else {
-  statusEl.textContent = "Upload successful ✅";
-}
+  if (error) {
+    console.error(error);
+    statusEl.textContent = "Upload failed: " + error.message;
+  } else {
+    statusEl.textContent = "Upload successful ✅";
+   }
+
 
 
 /* Run on load */
