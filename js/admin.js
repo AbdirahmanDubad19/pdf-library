@@ -71,5 +71,72 @@ uploadBtn.onclick = async () => {
   }
 };
 
-/* Run on load */
-checkAuth();
+/* Load PDFs */
+async function loadPdfs() {
+  const pdfListEl = document.getElementById("pdfList");
+  if (!pdfListEl) return;
+
+  pdfListEl.textContent = "Loading...";
+
+  const { data, error } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .list("", { limit: 100 });
+
+  if (error) {
+    pdfListEl.textContent = "Failed to load PDFs";
+    return;
+  }
+
+  pdfListEl.innerHTML = "";
+
+  data.forEach((file) => {
+    const row = document.createElement("div");
+    row.className = "pdf-row";
+
+    const name = document.createElement("span");
+    name.textContent = file.name;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Remove";
+    btn.onclick = () => deletePdf(file.name);
+
+    row.appendChild(name);
+    row.appendChild(btn);
+
+    pdfListEl.appendChild(row);
+  });
+}
+
+/* Delete PDF */
+async function deletePdf(fileName) {
+  const ok = confirm(`Delete "${fileName}"?`);
+  if (!ok) return;
+
+  const { error } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .remove([fileName]);
+
+  if (error) {
+    alert(error.message);
+  } else {
+    loadPdfs();
+  }
+}
+
+async function checkAuth() {
+  const {
+    data: { session },
+  } = await supabaseClient.auth.getSession();
+
+  if (!session) {
+    loginBox.style.display = "block";
+    adminBox.style.display = "none";
+  } else {
+    loginBox.style.display = "none";
+    adminBox.style.display = "block";
+    loadPdfs(); // ← This loads PDF list when admin logs in
+  }
+}
+
