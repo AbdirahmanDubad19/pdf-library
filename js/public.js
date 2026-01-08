@@ -9,35 +9,54 @@ const btnAll = document.getElementById("btnAll");
 const btnArabic = document.getElementById("btnArabic");
 const btnEnglish = document.getElementById("btnEnglish");
 
-// Load PDFs from optional folder
-async function loadPDFs(folder = "") {
+// Load PDFs from optional folder or both
+async function loadPDFs(folder = "all") {
   pdfList.innerHTML = "<li>Loading PDFs...</li>";
+  let allFiles = [];
 
-  const { data, error } = await supabaseClient
-    .storage
-    .from("pdfs")
-    .list(folder);
+  if (folder === "all") {
+    // Arabic
+    const { data: arabic, error: errA } = await supabaseClient
+      .storage
+      .from("pdfs")
+      .list("arabic");
+    if (errA) console.error(errA);
+    if (arabic) allFiles.push(...arabic.map(f => ({ ...f, folder: "arabic" })));
 
-  if (error) {
-    console.error(error);
-    pdfList.innerHTML = "<li>Failed to load PDFs</li>";
-    return;
+    // English
+    const { data: english, error: errE } = await supabaseClient
+      .storage
+      .from("pdfs")
+      .list("english");
+    if (errE) console.error(errE);
+    if (english) allFiles.push(...english.map(f => ({ ...f, folder: "english" })));
+  } else {
+    const { data, error } = await supabaseClient
+      .storage
+      .from("pdfs")
+      .list(folder);
+    if (error) {
+      console.error(error);
+      pdfList.innerHTML = "<li>Failed to load PDFs</li>";
+      return;
+    }
+    allFiles = data.map(f => ({ ...f, folder }));
   }
 
-  if (!data || data.length === 0) {
+  if (!allFiles || allFiles.length === 0) {
     pdfList.innerHTML = "<li>No PDFs found.</li>";
     return;
   }
 
   pdfList.innerHTML = "";
 
-  data.forEach(file => {
+  allFiles.forEach(file => {
     if (!file.name.endsWith(".pdf")) return;
 
     const { data: urlData } = supabaseClient
       .storage
       .from("pdfs")
-      .getPublicUrl(folder ? `${folder}/${file.name}` : file.name);
+      .getPublicUrl(`${file.folder}/${file.name}`);
 
     const url = urlData.publicUrl;
 
@@ -53,7 +72,6 @@ async function loadPDFs(folder = "") {
       </div>
     `;
 
-    // Read button
     li.querySelector(".btn-read").addEventListener("click", (e) => {
       readerTitle.textContent = e.target.dataset.name;
       pdfReader.src = e.target.dataset.url;
@@ -72,12 +90,11 @@ document.getElementById("closeReader").onclick = () => {
 };
 
 // Filter buttons
-btnAll.onclick = () => loadPDFs("");
+btnAll.onclick = () => loadPDFs("all");
 btnArabic.onclick = () => loadPDFs("arabic");
 btnEnglish.onclick = () => loadPDFs("english");
 
-// Default: show all
-loadPDFs();
-
+// Default load: show all
+loadPDFs("all");
 
 

@@ -22,12 +22,14 @@
 
 <div class="container">
   <div class="card">
-    <h1>Available PDFs</h1>
-    <div class="pdf-filter-buttons">
-      <button id="btnAll">All</button>
-      <button id="btnArabic">Arabic</button>
-      <button id="btnEnglish">English</button>
-    </div>
+    <h1 style="display:flex; align-items:center; gap:12px;">
+      Available PDFs
+      <div class="pdf-filter-buttons">
+        <button id="btnAll">All</button>
+        <button id="btnArabic">Arabic</button>
+        <button id="btnEnglish">English</button>
+      </div>
+    </h1>
     <ul id="pdfList"></ul>
   </div>
 </div>
@@ -43,7 +45,6 @@
   <button id="closeReader">close book ✕</button>
 </div>
 
-<!-- JS -->
 <script type="module" src="./js/supabase.js"></script>
 <script type="module" src="./js/public.js"></script>
 
