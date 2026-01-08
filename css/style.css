@@ -94,13 +94,17 @@ h1, h2 {
 /* ======================
    PDF list common
 ====================== */
-#pdfList {
+.public-page #pdfList {
   list-style: none;
   margin-top: 16px;
   padding: 0;
 }
 
-.pdf-item {
+.public-page #pdfList .pdf-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   background: #fdf6ed;
   border: 1px solid #e0d7c3;
   border-radius: 18px;
@@ -109,33 +113,22 @@ h1, h2 {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.pdf-item:hover {
+.public-page #pdfList .pdf-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
-.pdf-title {
+.public-page .pdf-title {
   font-size: 16px;
   font-weight: 600;
   color: #5a3e2b;
   word-break: break-word;
-}
-
-/* ======================
-   PDF list: Public Page
-====================== */
-.public-page #pdfList .pdf-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap; /* wrap on small screens */
+  flex: 1;
 }
 
 .public-page .pdf-actions {
   display: flex;
   gap: 8px;
-  flex-shrink: 0;
 }
 
 .public-page .pdf-actions button,
@@ -145,6 +138,26 @@ h1, h2 {
   font-size: 13px;
   text-align: center;
 }
+
+.btn-read {
+  background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-read:hover { filter: brightness(1.08); }
+
+.btn-download {
+  background: #efe3d1;
+  color: #5a3e2b;
+  border: 1px solid #d6c2a8;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-download:hover { background: #e6d4bd; }
+
 
 /* ======================
    PDF list: Admin Page

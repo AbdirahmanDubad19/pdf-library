@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>pdf library</title>
+  <title>PDF Library</title>
   <link rel="stylesheet" href="./css/style.css">
 
-  <!-- Supabase CDN (GLOBAL) -->
+  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="public-page">
@@ -22,20 +22,13 @@
 
 <div class="container">
   <div class="card">
-    <h1>available pdfs</h1>
-    <ul id="pdfList">
-      <li class="pdf-item">
-        <div class="pdf-info">
-          <span class="pdf-title">Book Name</span>
-        </div>
-
-        <div class="pdf-actions">
-          <button class="btn-read">📖 Read</button>
-          <a class="btn-download" href="PDF_URL" download>⬇ Download</a>
-        </div>
-      </li>
-
-    </ul>
+    <h1>Available PDFs</h1>
+    <div class="pdf-filter-buttons">
+      <button id="btnAll">All</button>
+      <button id="btnArabic">Arabic</button>
+      <button id="btnEnglish">English</button>
+    </div>
+    <ul id="pdfList"></ul>
   </div>
 </div>
 
@@ -50,10 +43,10 @@
   <button id="closeReader">close book ✕</button>
 </div>
 
-
-<!-- Your JS (modules) -->
+<!-- JS -->
 <script type="module" src="./js/supabase.js"></script>
 <script type="module" src="./js/public.js"></script>
 
 </body>
 </html>
+
