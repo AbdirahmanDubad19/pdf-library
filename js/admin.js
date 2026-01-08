@@ -78,21 +78,27 @@ async function loadPdfs() {
 
   pdfListEl.textContent = "Loading...";
 
+  // List all PDFs from bucket
   const { data, error } = await supabaseClient
     .storage
     .from("pdfs")
-    .list("", { limit: 100 });
+    .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
 
   if (error) {
     pdfListEl.textContent = "Failed to load PDFs";
     return;
   }
 
+  if (data.length === 0) {
+    pdfListEl.textContent = "No PDFs uploaded yet.";
+    return;
+  }
+
   pdfListEl.innerHTML = "";
 
   data.forEach((file) => {
-    const row = document.createElement("div");
-    row.className = "pdf-row";
+    const card = document.createElement("div");
+    card.className = "pdf-card";
 
     const name = document.createElement("span");
     name.textContent = file.name;
@@ -101,12 +107,13 @@ async function loadPdfs() {
     btn.textContent = "Remove";
     btn.onclick = () => deletePdf(file.name);
 
-    row.appendChild(name);
-    row.appendChild(btn);
+    card.appendChild(name);
+    card.appendChild(btn);
 
-    pdfListEl.appendChild(row);
+    pdfListEl.appendChild(card);
   });
 }
+
 
 /* Delete PDF */
 async function deletePdf(fileName) {

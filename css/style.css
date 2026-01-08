@@ -206,6 +206,56 @@ button:hover {
   cursor: pointer;
 }
 
+/* Section spacing */
+.section {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+/* PDF list grid */
+.pdf-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* PDF card */
+.pdf-card {
+  background: #fdf6ed;
+  border: 1px solid #e0d7c3;
+  border-radius: 12px;
+  padding: 12px 16px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* PDF card elements */
+.pdf-card span {
+  word-break: break-word;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #5a3e2b;
+}
+
+.pdf-card button {
+  background: #8b5e3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pdf-card button:hover {
+  background: #a06a45;
+}
+
 
 
 /* ======================
