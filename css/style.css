@@ -9,8 +9,8 @@
 
 body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #faf7f2; /* cream */
-  color: #3b2f2a;      /* dark brown */
+  background: #faf7f2;
+  color: #3b2f2a;
   line-height: 1.6;
 }
 
@@ -24,7 +24,6 @@ body {
   justify-content: center;
 }
 
-/* Logo in corner */
 .logo {
   position: absolute;
   left: 32px;
@@ -36,31 +35,23 @@ body {
   color: #3b2f2a;
 }
 
-/* Center container */
 .nav-inner {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-/* Bubble nav */
 .nav-bubble {
-  background: linear-gradient(
-    135deg,
-    #e8dccb, /* light cream */
-    #d6c2a6  /* warm beige */
-  );
+  background: linear-gradient(135deg, #e8dccb, #d6c2a6);
   padding: 12px 22px;
   border-radius: 999px;
   display: flex;
   gap: 22px;
-
   box-shadow:
     0 10px 25px rgba(59, 47, 42, 0.18),
     0 4px 8px rgba(59, 47, 42, 0.12);
 }
 
-/* Nav links */
 .nav-bubble a {
   text-decoration: none;
   color: #3b2f2a;
@@ -85,39 +76,102 @@ body {
   padding: 0 20px 60px;
 }
 
-/* Card */
 .card {
   background: #fffdf9;
   border-radius: 18px;
   padding: 26px;
   margin-top: 30px;
-
   box-shadow:
     0 20px 40px rgba(59, 47, 42, 0.12),
     0 6px 14px rgba(59, 47, 42, 0.08);
 }
 
-/* Headings */
 h1, h2 {
   font-weight: 600;
   margin-bottom: 12px;
 }
 
 /* ======================
-   Lists / PDFs
+   Public PDF List
 ====================== */
-ul {
+#pdfList {
   list-style: none;
   margin-top: 16px;
+  padding: 0;
 }
 
-li {
-  padding: 10px 0;
-  border-bottom: 1px solid #eee4d8;
+.pdf-item {
+  background: #fdf6ed;
+  border: 1px solid #e0d7c3;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.pdf-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+.pdf-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #5a3e2b;
+  margin-bottom: 14px;
+  word-break: break-word;
+}
+
+/* Actions (Read / Download) */
+.pdf-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.pdf-actions button,
+.pdf-actions a {
+  width: 100%;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+/* Read */
+.btn-read {
+  background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
+  color: #fff;
+  border: none;
+}
+
+.btn-read:hover {
+  filter: brightness(1.08);
+}
+
+/* Download */
+.btn-download {
+  background: #efe3d1;
+  color: #5a3e2b;
+  border: 1px solid #d6c2a8;
+}
+
+.btn-download:hover {
+  background: #e6d4bd;
 }
 
 /* ======================
-   Forms / Buttons
+   Forms / Admin
 ====================== */
 input,
 button {
@@ -145,16 +199,15 @@ button:hover {
   filter: brightness(1.05);
 }
 
-/* ======================
-   Status / Messages
-====================== */
 .status {
   margin-top: 10px;
   font-size: 13px;
   color: #6b5a4e;
 }
 
-/* === Reader container === */
+/* ======================
+   Reader
+====================== */
 #readerCard {
   max-width: 900px;
   margin: 3rem auto;
@@ -166,16 +219,6 @@ button:hover {
     inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* Reader title */
-#readerTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #5b3e2b;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* Divider */
 #readerCard::before {
   content: "reading";
   display: block;
@@ -186,7 +229,14 @@ button:hover {
   margin-bottom: 1rem;
 }
 
-/* PDF iframe */
+#readerTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #5b3e2b;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 #pdfReader {
   width: 100%;
   height: 70vh;
@@ -197,66 +247,13 @@ button:hover {
 
 #closeReader {
   display: block;
-  margin: 0 auto 1rem;
+  margin: 1rem auto 0;
   background: #e6d3b3;
-  border: none;
   border-radius: 999px;
   padding: 0.4rem 1rem;
   font-size: 0.75rem;
   cursor: pointer;
 }
-
-/* Section spacing */
-.section {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #ddd;
-}
-
-/* PDF list grid */
-.pdf-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-/* PDF card */
-.pdf-card {
-  background: #fdf6ed;
-  border: 1px solid #e0d7c3;
-  border-radius: 12px;
-  padding: 12px 16px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* PDF card elements */
-.pdf-card span {
-  word-break: break-word;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #5a3e2b;
-}
-
-.pdf-card button {
-  background: #8b5e3c;
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.pdf-card button:hover {
-  background: #a06a45;
-}
-
-
 
 /* ======================
    Footer
@@ -267,4 +264,3 @@ footer {
   font-size: 13px;
   color: #8a7a6d;
 }
-
