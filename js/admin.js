@@ -33,7 +33,7 @@ document.getElementById("logoutBtn").onclick = async () => {
   checkAuth();
 };
 
-/* Auth check */
+/* Auth check — SINGLE SOURCE OF TRUTH */
 async function checkAuth() {
   const {
     data: { session },
@@ -45,10 +45,11 @@ async function checkAuth() {
   } else {
     loginBox.style.display = "none";
     adminBox.style.display = "block";
+    loadPdfs();
   }
 }
 
-/* Upload PDF (minimal, no extras) */
+/* Upload PDF */
 uploadBtn.onclick = async () => {
   const file = pdfInput.files[0];
 
@@ -68,6 +69,8 @@ uploadBtn.onclick = async () => {
     statusEl.textContent = error.message;
   } else {
     statusEl.textContent = "Upload successful ✅";
+    pdfInput.value = "";
+    loadPdfs();
   }
 };
 
@@ -78,11 +81,10 @@ async function loadPdfs() {
 
   pdfListEl.textContent = "Loading...";
 
-  // List all PDFs from bucket
   const { data, error } = await supabaseClient
     .storage
     .from("pdfs")
-    .list("", { limit: 100, sortBy: { column: "created_at", order: "desc" } });
+    .list("", { limit: 100 });
 
   if (error) {
     pdfListEl.textContent = "Failed to load PDFs";
@@ -114,7 +116,6 @@ async function loadPdfs() {
   });
 }
 
-
 /* Delete PDF */
 async function deletePdf(fileName) {
   const ok = confirm(`Delete "${fileName}"?`);
@@ -132,18 +133,6 @@ async function deletePdf(fileName) {
   }
 }
 
-async function checkAuth() {
-  const {
-    data: { session },
-  } = await supabaseClient.auth.getSession();
-
-  if (!session) {
-    loginBox.style.display = "block";
-    adminBox.style.display = "none";
-  } else {
-    loginBox.style.display = "none";
-    adminBox.style.display = "block";
-    loadPdfs(); // ← This loads PDF list when admin logs in
-  }
-}
+/* Run on load */
+checkAuth();
 
