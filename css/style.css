@@ -92,7 +92,7 @@ h1, h2 {
 }
 
 /* ======================
-   Public PDF List
+   PDF list common
 ====================== */
 #pdfList {
   list-style: none;
@@ -104,13 +104,8 @@ h1, h2 {
   background: #fdf6ed;
   border: 1px solid #e0d7c3;
   border-radius: 18px;
-  padding: 18px;
+  padding: 16px;
   margin-bottom: 16px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -123,32 +118,61 @@ h1, h2 {
   font-size: 16px;
   font-weight: 600;
   color: #5a3e2b;
-  margin-bottom: 14px;
   word-break: break-word;
 }
 
-/* Actions (Read / Download) */
-.pdf-actions {
+/* ======================
+   PDF list: Public Page
+====================== */
+.public-page #pdfList .pdf-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap; /* wrap on small screens */
+}
+
+.public-page .pdf-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.public-page .pdf-actions button,
+.public-page .pdf-actions a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ======================
+   PDF list: Admin Page
+====================== */
+.admin-page #pdfList .pdf-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: auto;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.pdf-actions button,
-.pdf-actions a {
-  width: 100%;
+.admin-page .pdf-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-page .pdf-actions button,
+.admin-page .pdf-actions a {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
   text-align: center;
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
 }
 
-/* Read */
+/* ======================
+   Buttons common styles
+====================== */
 .btn-read {
   background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
   color: #fff;
@@ -159,7 +183,6 @@ h1, h2 {
   filter: brightness(1.08);
 }
 
-/* Download */
 .btn-download {
   background: #efe3d1;
   color: #5a3e2b;
@@ -263,4 +286,15 @@ footer {
   padding: 30px 0;
   font-size: 13px;
   color: #8a7a6d;
+}
+
+/* ======================
+   Responsive tweaks
+====================== */
+@media (max-width: 500px) {
+  .pdf-actions button,
+  .pdf-actions a {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
 }
