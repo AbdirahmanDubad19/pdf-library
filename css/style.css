@@ -190,7 +190,7 @@ h1, h2 {
 .admin-page #pdfList .pdf-item {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 16px;
   background: #fdf6ed;
   border: 1px solid #e0d7c3;
@@ -199,24 +199,23 @@ h1, h2 {
 }
 
 .admin-page .pdf-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: #5a3e2b;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   word-break: break-word;
 }
 
 .admin-page .pdf-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin-top: auto;
 }
 
 .admin-page .pdf-actions button {
+  width: 100%;
   background: #8b5e3c;
   color: #fff;
   border: none;
-  border-radius: 12px;
+  border-radius: 999px;
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.2s ease;
