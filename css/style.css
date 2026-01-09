@@ -187,7 +187,7 @@ h1, h2 {
   margin-top: 16px;
 }
 
-.admin-page #pdfList .pdf-item {
+.admin-page #pdfList .pdf-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
