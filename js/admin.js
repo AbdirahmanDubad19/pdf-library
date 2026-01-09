@@ -77,44 +77,53 @@ uploadBtn.onclick = async () => {
 /* Load PDFs */
 async function loadPdfs() {
   const pdfListEl = document.getElementById("pdfList");
-  if (!pdfListEl) return;
+  pdfListEl.innerHTML = "Loading...";
 
-  pdfListEl.textContent = "Loading...";
+  let files = [];
 
-  const { data, error } = await supabaseClient
+  const { data: arabic } = await supabaseClient
     .storage
     .from("pdfs")
-    .list("", { limit: 100 });
+    .list("arabic");
 
-  if (error) {
-    pdfListEl.textContent = "Failed to load PDFs";
-    return;
+  const { data: english } = await supabaseClient
+    .storage
+    .from("pdfs")
+    .list("english");
+
+  if (arabic) {
+    files.push(...arabic.map(f => ({ ...f, folder: "arabic" })));
+  }
+  if (english) {
+    files.push(...english.map(f => ({ ...f, folder: "english" })));
   }
 
-  if (data.length === 0) {
-    pdfListEl.textContent = "No PDFs uploaded yet.";
+  files = files.filter(f => f.name.endsWith(".pdf"));
+
+  if (files.length === 0) {
+    pdfListEl.innerHTML = "No PDFs uploaded yet.";
     return;
   }
 
   pdfListEl.innerHTML = "";
 
-  data.forEach((file) => {
+  files.forEach(file => {
     const card = document.createElement("div");
     card.className = "pdf-card";
 
-    const name = document.createElement("span");
-    name.textContent = file.name;
+    card.innerHTML = `
+      <strong>${file.name}</strong>
+      <small>${file.folder}</small>
+      <button>Remove</button>
+    `;
 
-    const btn = document.createElement("button");
-    btn.textContent = "Remove";
-    btn.onclick = () => deletePdf(file.name);
-
-    card.appendChild(name);
-    card.appendChild(btn);
+    card.querySelector("button").onclick = () =>
+      deletePdf(`${file.folder}/${file.name}`);
 
     pdfListEl.appendChild(card);
   });
 }
+
 
 /* Delete PDF */
 async function deletePdf(fileName) {
