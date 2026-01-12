@@ -366,3 +366,34 @@ footer {
     padding: 6px 10px;
   }
 }
+
+/* Mobile adjustments for PDF list (public page) */
+@media (max-width: 600px) {
+  #pdfList li {
+    display: flex;
+    flex-direction: column;  /* stack buttons under title */
+    gap: 12px;               /* spacing between title and buttons */
+  }
+
+  #pdfList li strong {
+    font-size: 1.1rem;       /* slightly larger title */
+  }
+
+  #pdfList li button,
+  #pdfList li a {
+    width: 100%;             /* full width buttons */
+    font-size: 1rem;         /* readable text */
+    padding: 10px 0;         /* bigger touch area */
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  #pdfList li button {
+    margin-top: 4px;
+  }
+
+  #pdfList li a {
+    margin-top: 4px;
+    display: block;
+  }
+}
