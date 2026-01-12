@@ -169,6 +169,7 @@ h1, h2 {
   padding: 4px 8px;
   border-radius: 999px;
   display: inline-block;
+  text-decoration: bold;
 }
 
 .btn-download:hover { background: #e6d4bd; }

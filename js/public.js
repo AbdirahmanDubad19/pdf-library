@@ -68,7 +68,7 @@ async function loadPDFs(folder = "all") {
         <button class="btn-read" data-url="${url}" data-name="${file.name}">
           📖 Read in page
         </button>
-        <a class="btn-download" href="${url}" download>⬇ Download</a>
+        <a class="btn-download" href="${url}" download>Download</a>
       </div>
     `;
 
