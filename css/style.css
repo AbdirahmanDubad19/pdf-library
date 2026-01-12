@@ -9,8 +9,8 @@
 
 body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #faf7f2;
-  color: #3b2f2a;
+  background: #faf7f2; /* cream */
+  color: #3b2f2a;      /* dark brown */
   line-height: 1.6;
 }
 
@@ -24,6 +24,7 @@ body {
   justify-content: center;
 }
 
+/* Logo in corner */
 .logo {
   position: absolute;
   left: 32px;
@@ -35,21 +36,22 @@ body {
   color: #3b2f2a;
 }
 
+/* Center container */
 .nav-inner {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
+/* Bubble nav */
 .nav-bubble {
   background: linear-gradient(135deg, #e8dccb, #d6c2a6);
   padding: 12px 22px;
   border-radius: 999px;
   display: flex;
   gap: 22px;
-  box-shadow:
-    0 10px 25px rgba(59, 47, 42, 0.18),
-    0 4px 8px rgba(59, 47, 42, 0.12);
+  box-shadow: 0 10px 25px rgba(59, 47, 42, 0.18),
+              0 4px 8px rgba(59, 47, 42, 0.12);
 }
 
 .nav-bubble a {
@@ -76,228 +78,75 @@ body {
   padding: 0 20px 60px;
 }
 
+/* Card */
 .card {
   background: #fffdf9;
   border-radius: 18px;
   padding: 26px;
   margin-top: 30px;
-  box-shadow:
-    0 20px 40px rgba(59, 47, 42, 0.12),
-    0 6px 14px rgba(59, 47, 42, 0.08);
+  box-shadow: 0 20px 40px rgba(59, 47, 42, 0.12),
+              0 6px 14px rgba(59, 47, 42, 0.08);
 }
 
+/* Headings */
 h1, h2 {
   font-weight: 600;
   margin-bottom: 12px;
 }
 
 /* ======================
-   PDF list common
+   PDF List / Public page
 ====================== */
-.public-page #pdfList {
-  list-style: none;
-  margin-top: 16px;
-  padding: 0;
-}
-
-.public-page #pdfList .pdf-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  background: #fdf6ed;
-  border: 1px solid #e0d7c3;
-  border-radius: 18px;
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.public-page #pdfList .pdf-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.public-page .pdf-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #5a3e2b;
-  word-break: break-word;
-  flex: 1;
-}
-
-.public-page .pdf-actions {
-  display: flex;
-  gap: 6px;
-}
-
-.pdf-filter-buttons {
-  display: inline-flex;
-  gap: 6px;
-}
-
-.pdf-filter-buttons button {
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  border: 1px solid #d6c2a8;
-  background: #efe3d1;
-  color: #5a3e2b;
-}
-
-.pdf-filter-buttons button:hover {
-  background: #e6d4bd;
-}
-
-.btn-read {
-  background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 4px 8px;
-  cursor: pointer;
-}
-
-.btn-read:hover { filter: brightness(1.08); }
-
-.btn-download {
-  background: #efe3d1;
-  color: #5a3e2b;
-  border: 1px solid #d6c2a8;
-  text-decoration: none;
-  padding: 4px 8px;
-  border-radius: 999px;
-  display: inline-block;
-  text-decoration: bold;
-}
-
-.btn-download:hover { background: #e6d4bd; }
-
-
-/* ======================
-   PDF list: Admin Page
-====================== */
-/* ======================
-   Admin Page Grid
-====================== */
-.admin-page #pdfList {
+#pdfList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 16px;
   margin-top: 16px;
 }
 
-.admin-page #pdfList .pdf-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+#pdfList li {
+  list-style: none;
   padding: 16px;
   background: #fdf6ed;
   border: 1px solid #e0d7c3;
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.admin-page .pdf-title {
-  font-size: 15px;
+#pdfList li strong {
+  font-size: 1rem;
   font-weight: 600;
   color: #5a3e2b;
   margin-bottom: 8px;
   word-break: break-word;
 }
 
-.admin-page .pdf-actions {
-  margin-top: auto;
-}
-
-.admin-page .pdf-actions button {
-  width: 100%;
-  background: #8b5e3c;
-  color: #fff;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.admin-page .pdf-actions button:hover {
-  background: #a06a45;
-}
-
-/* Responsive: fewer columns on smaller screens */
-@media (max-width: 800px) {
-  .admin-page #pdfList {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 500px) {
-  .admin-page #pdfList {
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* ======================
-   Buttons common styles
-====================== */
-.btn-read {
-  background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
-  color: #fff;
-  border: none;
-}
-
-.btn-read:hover {
-  filter: brightness(1.08);
-}
-
-.btn-download {
-  background: #efe3d1;
-  color: #5a3e2b;
-  border: 1px solid #d6c2a8;
-}
-
-.btn-download:hover {
-  background: #e6d4bd;
-}
-
-/* ======================
-   Forms / Admin
-====================== */
-input,
-button {
-  width: 100%;
-  padding: 12px 14px;
-  margin-top: 12px;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-input {
-  border: 1px solid #dbcbb6;
-  background: #fffdf9;
-}
-
-button {
-  border: none;
+/* Buttons under PDF title */
+#pdfList li button,
+#pdfList li a {
   background: linear-gradient(135deg, #6b4f3a, #8a6a4f);
   color: #fff;
   font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-bottom: 6px;
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
 }
 
-button:hover {
-  filter: brightness(1.05);
-}
-
-.status {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #6b5a4e;
+#pdfList li button:hover,
+#pdfList li a:hover {
+  background: #a06a45;
 }
 
 /* ======================
-   Reader
+   Reader container
 ====================== */
 #readerCard {
   max-width: 900px;
@@ -305,19 +154,9 @@ button:hover {
   padding: 1.5rem 1.5rem 2rem;
   background: #fffaf3;
   border-radius: 20px;
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-}
-
-#readerCard::before {
-  content: "reading";
-  display: block;
-  text-align: center;
-  letter-spacing: 0.15em;
-  font-size: 0.7rem;
-  color: #b59a7a;
-  margin-bottom: 1rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08),
+              inset 0 1px 0 rgba(255,255,255,0.6);
+  display: none;
 }
 
 #readerTitle {
@@ -340,10 +179,36 @@ button:hover {
   display: block;
   margin: 1rem auto 0;
   background: #e6d3b3;
+  border: none;
   border-radius: 999px;
-  padding: 0.4rem 1rem;
-  font-size: 0.75rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
   cursor: pointer;
+}
+
+/* ======================
+   Mobile adjustments
+====================== */
+@media (max-width: 600px) {
+  #pdfList {
+    grid-template-columns: 1fr; /* stack cards */
+  }
+
+  #pdfList li {
+    padding: 16px;
+  }
+
+  #pdfList li strong {
+    font-size: 1.2rem;
+  }
+
+  #pdfList li button,
+  #pdfList li a {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px 0;
+    margin-bottom: 8px;
+  }
 }
 
 /* ======================
@@ -354,46 +219,4 @@ footer {
   padding: 30px 0;
   font-size: 13px;
   color: #8a7a6d;
-}
-
-/* ======================
-   Responsive tweaks
-====================== */
-@media (max-width: 500px) {
-  .pdf-actions button,
-  .pdf-actions a {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-}
-
-/* Mobile adjustments for PDF list (public page) */
-@media (max-width: 600px) {
-  #pdfList li {
-    display: flex;
-    flex-direction: column;  /* stack buttons under title */
-    gap: 12px;               /* spacing between title and buttons */
-  }
-
-  #pdfList li strong {
-    font-size: 1.1rem;       /* slightly larger title */
-  }
-
-  #pdfList li button,
-  #pdfList li a {
-    width: 100%;             /* full width buttons */
-    font-size: 1rem;         /* readable text */
-    padding: 10px 0;         /* bigger touch area */
-    border-radius: 12px;
-    text-align: center;
-  }
-
-  #pdfList li button {
-    margin-top: 4px;
-  }
-
-  #pdfList li a {
-    margin-top: 4px;
-    display: block;
-  }
 }
