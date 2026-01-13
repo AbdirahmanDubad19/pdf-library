@@ -210,6 +210,34 @@ h1, h2 {
     margin-bottom: 8px;
   }
 }
+/* Mobile navbar alignment fix */
+@media (max-width: 600px) {
+  .top-nav {
+    padding: 16px 0 24px;
+  }
+
+  .nav-inner {
+    justify-content: space-between; /* split left/right */
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .logo {
+    position: static; /* stop absolute positioning on mobile */
+    font-size: 16px;
+  }
+
+  .nav-bubble {
+    padding: 8px 14px;
+    gap: 12px;
+  }
+
+  .nav-bubble a {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+}
+
 
 /* ======================
    Footer
